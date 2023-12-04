@@ -26,3 +26,4 @@
 
 mvnw*
 .mvn
+/bin/

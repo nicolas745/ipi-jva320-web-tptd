@@ -1,0 +1,12 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<input th:value="${id}" /><!-- => value="1" -->
+<input th:attr="value=${nom},placeholder=${ex}" />
+<!-- => value="Jean" placeholder="John" -->
+<a th:href="@{/patients(id=${id})}">permalien 1</a>
+<!-- => href="/patients?id=1" -->
+<a th:href="@{/patients/{id}(id=${id})}">permalien 2</a>
+<!-- => href="/patients/1" -->
+</form>
+</body>
+</html>

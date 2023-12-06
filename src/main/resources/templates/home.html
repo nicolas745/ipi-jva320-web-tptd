@@ -14,10 +14,9 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li><a href="http://localhost:8080/salaries?page=0&amp;size=10&amp;sortProperty=id&amp;sortDirection=ASC" class="nav-link">Liste des salariés <span class="badge badge-primary">26</span></a></li>
+                <li><a href="http://localhost:8080/salaries?page=0&amp;size=10&amp;sortProperty=id&amp;sortDirection=ASC" class="nav-link">Liste des salariés <span class="badge badge-primary" th:text="${nbsalaire}">26</span></a></li>
             </ul>
 
             <form class="form-inline my-2 my-lg-0" role="search" action="http://localhost:8080/salaries" method="GET">
@@ -29,10 +28,9 @@
         </div>
     </nav>
 </div>
-
 <div class="container mt-2">
     <div class="jumbotron">
-        <h1>Bienvenue dans l'interface d'administration RH ! (26 salariés)</h1>
+        <h1>Bienvenue dans l'interface d'administration RH ! (<span th:text="${nbsalaire}">26</span> salariés)</h1>
         <p>Voir dans <code>README.md</code> comment configurer la base de données de l'application, la lancer et afficher une page statique.</p>
         <p>Cette application est développée sous forme de Controllers Spring MVC et templates Thymeleaf. Les premiers sont à développer et les seconds à enrichir à partir des pages HTML existantes.</p>
         <p/>
@@ -52,7 +50,7 @@
             </li>
             <li class="list-group-item">
                 <h4 class="list-group-item-heading">Afficher le nombre de salariés</h4>
-                <p class="list-group-item-text">Dans le titre au-dessus, "26" doit être remplacé par le nombre de salariés réellement en base. Développer ou enrichir la bonne méthode mappée de Controller en utilisant méthode countSalaries() de SalarieAideADomicileService pour cela (à injecter dans le Controller en l'annotannt @Autowired).</p>
+                <p class="list-group-item-text">Dans le titre au-dessus, "<span th:text="${nbsalaire}">26</span>" doit être remplacé par le nombre de salariés réellement en base. Développer ou enrichir la bonne méthode mappée de Controller en utilisant méthode countSalaries() de SalarieAideADomicileService pour cela (à injecter dans le Controller en l'annotannt @Autowired).</p>
             </li>
             <li class="list-group-item">
                 <h4 class="list-group-item-heading">Afficher la page des détails d'un salarié</h4>

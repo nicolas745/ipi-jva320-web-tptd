@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <input th:value="${id}" /><!-- => value="1" -->
-<input th:attr="value=${nom},placeholder=${ex}" />
+<input th:attr="value=${salarie.nom},placeholder=${ex}" />
 <!-- => value="Jean" placeholder="John" -->
 <a th:href="@{/patients(id=${id})}">permalien 1</a>
 <!-- => href="/patients?id=1" -->

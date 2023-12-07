@@ -1,4 +1,5 @@
 package com.ipi.jva320.controller;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ipi.jva320.exception.SalarieException;
 import com.ipi.jva320.model.SalarieAideADomicile;
 import com.ipi.jva320.service.SalarieAideADomicileService;
 @Controller
@@ -30,9 +32,11 @@ public class SalaireController {
 		return "detail_Salarie";
 	}
 	@PostMapping(value = "/salaries/aide/new")
-	public String postsalariesnew(@RequestParam Map<String, String> post, final ModelMap model) {
-		SalarieAideADomicile salarier = new SalarieAideADomicile();
-		System.out.println(post.toString());
+	public String postsalariesnew(@RequestParam Map<String, String> post, final ModelMap model) throws SalarieException {
+		SalarieAideADomicile salarier = new SalarieAideADomicile("Jean", LocalDate.parse("2022-12-05"), LocalDate.parse("2022-12-05"),
+                20, 0,
+                80, 10, 1);
+		salarieAideADomicileService.creerSalarieAideADomicile(salarier);
 		model.addAttribute("salarie", salarier);
 		return "detail_Salarie";
 	}

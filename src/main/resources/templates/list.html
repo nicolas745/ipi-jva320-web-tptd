@@ -47,8 +47,8 @@
         </thead>
         <tbody>
         <tr th:each="salarie, iterStat : ${salaries}">
-          <th scope="row">1</th>
-          <td th:text="salarie.nom">Jeanne Dupond</td>
+          <th th:text="${salarie.id}" scope="row">1</th>
+          <td th:text="${salarie.nom}">Jeanne Dupond</td>
           <td><a th:href="'/salaries/aide/'+${salarie.id}" href="/salaries/aide/2" class="btn btn-primary ember-view">Détail</a></td>
         </tr>
         </tbody>

@@ -3,6 +3,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityExistsException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,12 +35,18 @@ public class SalaireController {
 	}
 	@PostMapping(value = "/salaries/aide/new")
 	public String postsalariesnew(@RequestParam Map<String, String> post, final ModelMap model) throws SalarieException {
-		SalarieAideADomicile salarier = new SalarieAideADomicile("Jean", LocalDate.parse("2022-12-05"), LocalDate.parse("2022-12-05"),
-                20, 0,
-                80, 10, 1);
+		SalarieAideADomicile salarier = new SalarieAideADomicile(post.get("nom"), LocalDate.parse(post.get("moisDebutContrat")), LocalDate.parse(post.get("moisEnCours")),
+               Double.parseDouble(post.get("joursTravaillesAnneeN")), Double.parseDouble(post.get("congesPayesAcquisAnneeN")),
+               Double.parseDouble(post.get("joursTravaillesAnneeNMoins1")), Double.parseDouble(post.get("congesPayesAcquisAnneeNMoins1")),  Double.parseDouble(post.get("congesPayesPrisAnneeNMoins1")));
+		System.out.println(post);
 		salarieAideADomicileService.creerSalarieAideADomicile(salarier);
 		model.addAttribute("salarie", salarier);
 		return "detail_Salarie";
+	}
+	@GetMapping(value = "/salaries/{id}/delete")
+	public String delete(@PathVariable Long id, ModelMap model) throws EntityExistsException, SalarieException {
+		salarieAideADomicileService.deleteSalarieAideADomicile(id);
+		return "redirect:/salaries?page=0&size=10&sortProperty=nom&sortDirection=ASC"; 
 	}
 	@GetMapping(value = "/salaries")
 	public String salaries(@RequestParam("page") int page, @RequestParam("size") Long size, @RequestParam("sortProperty") String nom,@RequestParam("sortDirection") String sortDirection, final ModelMap model) {

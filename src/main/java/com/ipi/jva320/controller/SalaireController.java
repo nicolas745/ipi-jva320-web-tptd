@@ -21,12 +21,32 @@ public class SalaireController {
 	@Autowired
 	private SalarieAideADomicileService salarieAideADomicileService;
 	@GetMapping(value = "/salaries/{id}")
-	public String home(@PathVariable int id,final ModelMap model) {
-		SalarieAideADomicile salarier = salarieAideADomicileService.getSalaries().get(id-1);
+	public String home(@PathVariable long id,final ModelMap model) {
+		SalarieAideADomicile salarier = salarieAideADomicileService.getSalarie(id);
+		if(salarier==null) {
+			if(salarieAideADomicileService.getSalaries().size()==0) {
+				return "redirect:/salaries";
+			}else {
+				return "redirect:/salaries/"+salarieAideADomicileService.getSalaries().get(0).getId().intValue();
+			}
+		}
 		model.addAttribute("salarie", salarier);
 		return "detail_Salarie";
 	}
 	
+	@PostMapping(value = "/salaries/{id}")
+	public String edit(ModelMap model, @PathVariable Long id, @RequestParam Map<String, String> post) {
+		System.out.println(post);
+		SalarieAideADomicile salaire = salarieAideADomicileService.getSalarie(id);
+		
+		salaire.setCongesPayesAcquisAnneeN(Double.parseDouble(post.get("congesPayesAcquisAnneeN")));
+		salaire.setCongesPayesAcquisAnneeNMoins1(Double.parseDouble(post.get("congesPayesAcquisAnneeNMoins1")));
+		salaire.setCongesPayesPrisAnneeNMoins1(Double.parseDouble(post.get("congesPayesPrisAnneeNMoins1")));
+		salaire.setJoursTravaillesAnneeN(Double.parseDouble(post.get("joursTravaillesAnneeN")));
+		salaire.setJoursTravaillesAnneeNMoins1(Double.parseDouble(post.get("joursTravaillesAnneeNMoins1")));
+		model.addAttribute("salarie", salarieAideADomicileService.getSalarie(id));
+		return "detail_Salarie";
+	}
 	@GetMapping(value ="/salaries/aide/new")
 	public String salariesnew(final ModelMap model) {
 		SalarieAideADomicile salarier = new SalarieAideADomicile();

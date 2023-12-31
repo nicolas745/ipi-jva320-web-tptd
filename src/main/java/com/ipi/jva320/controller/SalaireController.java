@@ -69,11 +69,20 @@ public class SalaireController {
 		return "redirect:/salaries?page=0&size=10&sortProperty=nom&sortDirection=ASC"; 
 	}
 	@GetMapping(value = "/salaries")
-	public String salaries(@RequestParam("page") int page, @RequestParam("size") Long size, @RequestParam("sortProperty") String nom,@RequestParam("sortDirection") String sortDirection, final ModelMap model) {
-		List<SalarieAideADomicile> listsalaries = salarieAideADomicileService.getSalaries();
-		model.addAttribute("salaries",listsalaries); 
-		model.put("next", page+1);
-		model.put("last", page-1);
+	public String salaries(@RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "size", required = false) Long size,
+            @RequestParam(value = "sortProperty", required = false) String nom,
+            @RequestParam(value = "sortDirection", required = false) String sortDirection,
+            @RequestParam(value="nom", required = false) String research,
+            final ModelMap model) {
+		if(research!=null) {
+			
+		}else if(page!=null){
+			List<SalarieAideADomicile> listsalaries = salarieAideADomicileService.getSalaries();
+			model.addAttribute("salaries",listsalaries); 
+			model.put("next", page+1);
+			model.put("last", page-1);
+		}
 		return "list"; 
 	}
 }

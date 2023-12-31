@@ -1,5 +1,6 @@
 package com.ipi.jva320.controller;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -76,13 +77,25 @@ public class SalaireController {
             @RequestParam(value="nom", required = false) String research,
             final ModelMap model) {
 		if(research!=null) {
-			
-		}else if(page!=null){
+			List<SalarieAideADomicile> listsalaries = salarieAideADomicileService.getSalaries();
+			List<SalarieAideADomicile> select = new ArrayList<SalarieAideADomicile>();
+			for (SalarieAideADomicile salarieAideADomicile : listsalaries) {
+				System.out.println(salarieAideADomicile.getNom() + " : "+research);
+				if(salarieAideADomicile.getNom().equals(research)) {
+					System.out.println("dd");
+					select.add(salarieAideADomicile);
+				}
+			}
+			model.addAttribute("salaries",select); 
+		}else{
 			List<SalarieAideADomicile> listsalaries = salarieAideADomicileService.getSalaries();
 			model.addAttribute("salaries",listsalaries); 
-			model.put("next", page+1);
-			model.put("last", page-1);
 		}
+		if(page==null) {
+			page=0;
+		}
+		model.put("next", page+1);
+		model.put("last", page-1);
 		return "list"; 
 	}
 }
